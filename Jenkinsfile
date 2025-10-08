@@ -24,14 +24,12 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withCredentials([string(credentialsId: 'sonarcube-cred', variable: 'SONAR_TOKEN')]) {
+                withSonarQubeEnv('sonarqube') {  // 'sonarqube' is the name of the SonarQube server in Jenkins
                     sh '''
                     /opt/sonar-scanner-6.0.0.4432-linux/bin/sonar-scanner \
                       -Dsonar.projectKey=student-management \
                       -Dsonar.sources=src \
-                      -Dsonar.java.binaries=target/classes \
-                      -Dsonar.host.url=http://192.168.33.10:9000 \
-                      -Dsonar.login=$SONAR_TOKEN
+                      -Dsonar.java.binaries=target/classes
                     '''
                 }
             }
@@ -40,7 +38,7 @@ pipeline {
 
         stage('Quality Gate') {
             steps {
-                timeout(time: 5, unit: 'MINUTES') {
+                timeout(time: 1, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
             }
