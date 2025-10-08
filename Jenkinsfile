@@ -26,7 +26,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'sonarcube-cred', variable: 'SONAR_TOKEN')]) {
                     sh '''
-                    sonar-scanner \
+                    /opt/sonar-scanner-6.0.0.4432-linux/bin/sonar-scanner \
                       -Dsonar.projectKey=student-management \
                       -Dsonar.sources=src \
                       -Dsonar.host.url=http://192.168.33.10:9000 \
@@ -35,6 +35,7 @@ pipeline {
                 }
             }
         }
+
 
         stage('Quality Gate') {
             steps {
