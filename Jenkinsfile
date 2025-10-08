@@ -29,6 +29,7 @@ pipeline {
                     /opt/sonar-scanner-6.0.0.4432-linux/bin/sonar-scanner \
                       -Dsonar.projectKey=student-management \
                       -Dsonar.sources=src \
+                      -Dsonar.java.binaries=target/classes \
                       -Dsonar.host.url=http://192.168.33.10:9000 \
                       -Dsonar.login=$SONAR_TOKEN
                     '''
