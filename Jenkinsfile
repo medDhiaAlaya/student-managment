@@ -25,13 +25,13 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withCredentials([string(credentialsId: 'sonarcube-cred', variable: 'SONAR_TOKEN')]) {
-                    sh """
+                    sh '''
                     sonar-scanner \
-                      -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                      -Dsonar.projectKey=student-management \
                       -Dsonar.sources=src \
-                      -Dsonar.host.url=${SONARQUBE_URL} \
+                      -Dsonar.host.url=http://192.168.33.10:9000 \
                       -Dsonar.login=$SONAR_TOKEN
-                    """
+                    '''
                 }
             }
         }
